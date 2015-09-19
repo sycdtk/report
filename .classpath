@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/db2jcc.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/db2jcc_license_cu.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/jacob.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/jodd-3.4.5.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/jxl.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/slf4j-nop-1.7.5.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/mysql-connector-java-5.0.5-bin.jar"/>
+	<classpathentry kind="lib" path="D:/50.workspace/ReportTools_V2.0/lib/ojdbc14.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

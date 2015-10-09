@@ -15,6 +15,7 @@ import jxl.write.NumberFormats;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 
 /**
  * 生成Excel文档
@@ -25,7 +26,7 @@ public class JXLUtils {
 	
 	private static Logger logger = LoggerManager.getLogger(JXLUtils.class.getName());  
 	
-	public static boolean DB2Excel(Map<Integer,Table> tableMap) { 
+	public static boolean DB2Excel(Map<Integer,Table> tableMap) throws WriteException { 
         boolean flag = false; 
         WritableWorkbook workBook = null; 
         WritableSheet sheet = null; 
@@ -42,6 +43,8 @@ public class JXLUtils {
 		String[] reportCount = PropsManager.getValue("report.count").split(",");
 		
 		WritableCellFormat contentFromart = new WritableCellFormat(NumberFormats.TEXT);
+		WritableCellFormat contentFromartWrap = new WritableCellFormat();
+		contentFromartWrap.setWrap(true);
 
         try {
             // 创建Excel表 
@@ -115,7 +118,7 @@ public class JXLUtils {
                 
             	//添加数据
                 int rowCount = table.getRowSize();
-                
+                columnCount = table.getColumnSize();
                 for(int row=0; row<rowCount; row++){
                 	for(int column=0;column<columnCount;column++){
                 		String cellValue = table.get(row, column);
@@ -148,10 +151,10 @@ public class JXLUtils {
                 			//数据行列转换
             				if(trans){
             					//转换
-            					label = new Label(column+1, row, cellValue);
+            					label = new Label(column+1, row, cellValue,contentFromartWrap);
             				}else{
             					//不转换
-            					label = new Label(column, row+1, cellValue);
+            					label = new Label(column, row+1, cellValue,contentFromartWrap);
             				}
                 			
                 			sheet.addCell(label); 

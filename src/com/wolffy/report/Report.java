@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import jxl.write.WriteException;
+
 import com.wolffy.manager.LoggerManager;
 import com.wolffy.manager.PropsManager;
 import com.wolffy.model.Table;
@@ -64,7 +66,12 @@ public class Report {
 				
 				logger.info("开始数据导出……");
 				
-				JXLUtils.DB2Excel(tableMap);
+				try {
+					JXLUtils.DB2Excel(tableMap);
+				} catch (WriteException e) {
+					logger.severe(e.getMessage());
+					e.printStackTrace();
+				}
 				
 				logger.info("数据导出成功！");
 				

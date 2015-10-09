@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -71,7 +72,14 @@ public class Table {
 	 * @return
 	 */
 	public int getRowSize(){
-		return tableMap.size();
+		int rowSize = 0;
+		int keyNum = 0;
+		for(Map.Entry<Integer, Map<Integer, String>> r : tableMap.entrySet()){
+			keyNum = r.getKey();
+			rowSize = keyNum>rowSize?keyNum:rowSize;
+		}
+//		return tableMap.size();
+		return rowSize+1;
 	}
 	
 	/**
@@ -79,7 +87,17 @@ public class Table {
 	 * @return
 	 */
 	public int getColumnSize(){
-		return (tableMap.size()>0)?tableMap.get(0).size():0;
+		int columnSize = 0;
+		int keyNum = 0;
+		for(Map.Entry<Integer, Map<Integer, String>> r : tableMap.entrySet()){
+			for(Map.Entry<Integer, String> c : r.getValue().entrySet()){
+				keyNum = c.getKey();
+				columnSize = keyNum>columnSize?keyNum:columnSize;
+			}
+		}
+		
+//		return (tableMap.size()>0)?tableMap.get(0).size():0;
+		return columnSize+1;
 	}
 	
 	/**
@@ -168,35 +186,59 @@ public class Table {
 	public Table transform(){
 		int row = this.getRowSize();
 		int column = this.getColumnSize();
-		String value = null;
-
+		String value1 = null;
+		String value2 = null;
 		//转换
-		if(row<column){
-			for(int i=0;i<row;i++){
-				for(int j=i;j<column;j++){
-					value = get(j, i);
-					put(j, i, get(i, j));
-					if(value == null){
-						clear(i,j);
-					}else{
-						put(i, j, value);
-					}
+		
+		int maxNum = row>column?row:column;
+		
+		for(int i=0;i<maxNum;i++){
+			for(int j=i;j<maxNum;j++){
+				value1 = get(i, j);
+				value2 = get(j, i);
+				
+				if(value1 == null){
+					clear(j,i);
+				}else{
+					put(j, i, value1);
 				}
-			}
-			
-		}else{
-			for(int j=0;j<column;j++){
-				for(int i=j;i<row;i++){
-					value = get(j, i);
-					put(j, i, get(i, j));
-					if(value == null){
-						clear(i,j);
-					}else{
-						put(i, j, value);
-					}
+				
+				if(value2 == null){
+					clear(i,j);
+				}else{
+					put(i, j, value2);
 				}
+				
 			}
 		}
+		
+		
+//		if(row<column){
+//			for(int i=0;i<row;i++){
+//				for(int j=i;j<column;j++){
+//					value = get(j, i);
+//					put(j, i, get(i, j));
+//					if(value == null){
+//						clear(i,j);
+//					}else{
+//						put(i, j, value);
+//					}
+//				}
+//			}
+//			
+//		}else{
+//			for(int j=0;j<column;j++){
+//				for(int i=j;i<row;i++){
+//					value = get(j, i);
+//					put(j, i, get(i, j));
+//					if(value == null){
+//						clear(i,j);
+//					}else{
+//						put(i, j, value);
+//					}
+//				}
+//			}
+//		}
 		return this;
 	}
 	
@@ -205,10 +247,11 @@ public class Table {
 		for(int i=0;i<getRowSize();i++){
 			for(int j=0;j<getColumnSize();j++){
 				String value = get(i, j);
-				System.out.print(value+"\t");
+				System.out.print(value==null?" \t":value+"\t");
 			}
 			System.out.print("\n");
 		}
 	}
+	
 
 }
